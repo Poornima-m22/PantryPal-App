@@ -64,27 +64,42 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script type="text/babel">
-        // Your Firebase Configuration - IMPORTANT: REPLACE {} WITH YOUR ACTUAL CONFIG
+        // IMPORTANT SECURITY NOTE:
+        // When deploying this HTML file to a public repository like GitHub Pages,
+        // your Firebase configuration will be publicly visible in the browser's source code.
+        //
+        // This is generally acceptable for client-side Firebase SDKs, as the primary security
+        // for your data lies in your Firebase Security Rules, NOT in keeping this config secret.
+        //
+        // HOWEVER, if you have very sensitive data or are concerned about abuse (e.g., someone
+        // repeatedly hitting your Firebase services), ensure your Firebase Security Rules
+        // are EXTREMELY strict (e.g., only authenticated users can access their own data).
+        //
+        // If you are running this within a secure Canvas environment, you would typically use
+        // the global variables __firebase_config and __app_id provided by the environment,
+        // which keeps your actual config out of the code.
+        //
+        // For standalone HTML, paste your Firebase config object here:
         const firebaseConfig = {
-        apiKey: "AIzaSyCgMiCM7qCVBxo_T4_2DQYzJzFe2x_oyB0",
-  authDomain: "pantrypal-6172b.firebaseapp.com",
-  projectId: "pantrypal-6172b",
-  storageBucket: "pantrypal-6172b.firebasestorage.app",
-  messagingSenderId: "407020112260",
-  appId: "1:407020112260:web:8491b12620770ed31775d1",
-  measurementId: "G-55LPDFW2HW"
-  }; // PASTE YOUR FIREBASE CONFIG OBJECT HERE
+            apiKey: "AIzaSyCgMiCM7qCVBxo_T4_2DQYzJzFe2x_oyB0",
+            authDomain: "pantrypal-6172b.firebaseapp.com",
+            projectId: "pantrypal-6172b",
+            storageBucket: "pantrypal-6172b.firebasestorage.app",
+            messagingSenderId: "407020112260",
+            appId: "1:407020112260:web:8491b12620770ed31775d1",
+            measurementId: "G-55LPDFW2HW"
+        };
 
         // Check if firebaseConfig is properly set
-        if (Object.keys(firebaseConfig).length === 0) {
-            console.error("Firebase configuration is missing! Please replace `{}` with your actual Firebase config object.");
+        if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.apiKey) {
+            console.error("Firebase configuration is missing or incomplete! Please replace `{}` with your actual Firebase config object.");
             // Display an error message to the user on the page
             document.getElementById('root').innerHTML = `
                 <div style="text-align: center; padding: 20px; color: red; font-family: 'Inter', sans-serif;">
                     <h2>Configuration Error</h2>
-                    <p>Your Firebase configuration is missing. Please open the HTML file, find the line 
+                    <p>Your Firebase configuration is missing or incomplete. Please open the HTML file, find the line 
                     <code>const firebaseConfig = {};</code> and replace <code>{}</code> with your actual Firebase project configuration.</p>
-                    <p>Refer to the previous instructions on how to get your Firebase config from the Firebase Console.</p>
+                    <p>Refer to the Firebase Console for your project's config details (Project settings -> General -> Your apps -> Web app).</p>
                 </div>
             `;
             // Prevent the React app from rendering if config is missing
@@ -190,7 +205,7 @@
             return (
                 <div className="p-8 bg-white rounded-2xl shadow-xl max-w-md mx-auto transform transition-all duration-300 hover:scale-[1.02]">
                     <div className="flex justify-center mb-8">
-                        <img src={appLogoUrl} alt="App Logo" className="w-32 h-32 rounded-full object-cover shadow-lg border-4 border-blue-100" />
+                        <img src="https://img.freepik.com/premium-vector/beautiful-flat-style-shopping-cart-icon-vector-illustration_1287271-93197.jpg?w%3D360" alt="App Logo" className="w-32 h-32 rounded-full object-cover shadow-lg border-4 border-blue-100" />
                     </div>
                     <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
                         {isLogin ? 'Welcome Back!' : 'Join PantryPal!'}
@@ -1397,7 +1412,7 @@
             // --- Shopping List Component ---
             const ShoppingListView = () => {
                 const [newItem, setNewItem] = React.useState('');
-                const [newItemQuantity, setNewItemQuantity] = React.useState(1); // Renamed setter here
+                const [newItemQuantity, setNewItemQuantity] = React.useState(1);
 
                 const handleAddItem = async () => {
                     if (!newItem.trim()) {
